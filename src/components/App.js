@@ -7,8 +7,10 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const handleEditAvatarClick = () => {
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
 
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true)
   }
 
   React.useEffect(() => {
@@ -23,7 +25,7 @@ function App() {
     <>
       <div className="content">
         <Header />
-        <Main>
+        <Main onEditAvatarClick={handleEditAvatarClick}>
           <PopupWithForm name="edit" title="Edit profile">
             <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" required
               minLength="2" maxLength="40" />
@@ -42,7 +44,7 @@ function App() {
             <span id="link-input-error"></span>
             <button type="submit" className="submit-button popup__button">Create</button>
           </PopupWithForm>
-          <PopupWithForm name="profile-image" title="Change profile picture">
+          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen}>
             <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link"
               placeHolder="Image link" required />
             <span id="image-link-input-error"></span>

@@ -1,12 +1,12 @@
 import React from 'react';
 
-function Main() {
+function Main(props) {
     return (
         <main className="main">
             <section className="profile">
                 <div className="profile__image-wrapper">
                     <img src="#" alt="Avatar of the page profile" className="profile__image" />
-                    <button aria-label="Edit" type="button" className="profile-image-button"></button>
+                    <button aria-label="Edit" type="button" className="profile-image-button" onClick={props.handleEditAvatarClick}></button>
                 </div>
                 <div className="profile__wrapper">
                     <h1 className="profile__name"></h1>

@@ -9,8 +9,12 @@ function App() {
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
 
-  const handleEditAvatarClick = () => {
+  function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
+  }
+
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false)
   }
 
   React.useEffect(() => {
@@ -37,21 +41,21 @@ function App() {
           </PopupWithForm>
           <PopupWithForm name="add" title="New place">
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
-              placeHolder="Title" required minLength="1" maxLength="30" />
+              placeholder="Title" required minLength="1" maxLength="30" />
             <span id="title-input-error"></span>
             <input type="url" id="link-input" name="link" className="popup__input popup__input_field_link"
-              placeHolder="Image link" required />
+              placeholder="Image link" required />
             <span id="link-input-error"></span>
             <button type="submit" className="submit-button popup__button">Create</button>
           </PopupWithForm>
-          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen}>
+          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
             <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link"
-              placeHolder="Image link" required />
+              placeholder="Image link" required />
             <span id="image-link-input-error"></span>
             <button type="submit" className="submit-button popup__button">Create</button>
           </PopupWithForm>
           <PopupWithForm name="delete-card" title="Are you sure?">
-            <button type="submit" class="submit-button submit-button_type_delete-card popup__button">Yes</button>
+            <button type="submit" className="submit-button submit-button_type_delete-card popup__button">Yes</button>
           </PopupWithForm>
           <ImagePopup />
         </Main>

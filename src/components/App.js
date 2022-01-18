@@ -8,13 +8,25 @@ import ImagePopup from "./ImagePopup";
 function App() {
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
   }
 
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true)
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true)
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
   }
 
   React.useEffect(() => {
@@ -29,8 +41,8 @@ function App() {
     <>
       <div className="content">
         <Header />
-        <Main onEditAvatarClick={handleEditAvatarClick}>
-          <PopupWithForm name="edit" title="Edit profile">
+        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick}>
+          <PopupWithForm name="edit" title="Edit profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
             <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" required
               minLength="2" maxLength="40" />
             <span id="name-input-error"></span>
@@ -39,7 +51,7 @@ function App() {
             <span id="aboutMe-input-error"></span>
             <button type="submit" className="submit-button popup__button">Save</button>
           </PopupWithForm>
-          <PopupWithForm name="add" title="New place">
+          <PopupWithForm name="add" title="New place" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
               placeholder="Title" required minLength="1" maxLength="30" />
             <span id="title-input-error"></span>

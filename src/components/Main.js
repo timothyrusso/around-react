@@ -10,10 +10,10 @@ function Main(props) {
                 </div>
                 <div className="profile__wrapper">
                     <h1 className="profile__name"></h1>
-                    <button aria-label="Edit" type="button" className="edit-button"></button>
+                    <button aria-label="Edit" type="button" className="edit-button" onClick={props.onEditProfileClick}></button>
                     <p className="profile__about-me"></p>
                 </div>
-                <button aria-label="Add" type="button" className="add-button"></button>
+                <button aria-label="Add" type="button" className="add-button" onClick={props.onAddPlaceClick}></button>
             </section>
 
             <section className="gallery">

@@ -10,6 +10,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
+  const [selectedCard, setIsselectedCard] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -23,10 +24,15 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
+  function handleCardClick() {
+    setIsselectedCard(true)
+  }
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
+    setIsselectedCard(false)
   }
 
   React.useEffect(() => {
@@ -41,7 +47,7 @@ function App() {
     <>
       <div className="content">
         <Header />
-        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick}>
+        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick}>
           <PopupWithForm name="edit" title="Edit profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
             <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" required
               minLength="2" maxLength="40" />
@@ -69,7 +75,7 @@ function App() {
           <PopupWithForm name="delete-card" title="Are you sure?">
             <button type="submit" className="submit-button submit-button_type_delete-card popup__button">Yes</button>
           </PopupWithForm>
-          <ImagePopup />
+          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />
       </div>

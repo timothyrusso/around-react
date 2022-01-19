@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../utils/api';
+import Card from './Card';
 
 function Main(props) {
 
@@ -46,7 +47,13 @@ function Main(props) {
             </section>
 
             <section className="gallery">
-                <ul className="cards-grid"></ul>
+                <ul className="cards-grid">
+                    {cards.map(card => {
+                        return (
+                            <Card name={card.name} id={card.id} link={card.link} card={props.card} onCardClick={props.onCardClick} />
+                        )
+                    })}
+                </ul>
             </section>
             {props.children}
         </main>

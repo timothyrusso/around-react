@@ -9,7 +9,7 @@ function handleClick() {
     return (
         <li className="card" key={props._id}>
             <button aria-label="Delete" type="button" className="card__delete"></button>
-            <div className="card__image" style={{ backgroundImage: `url(${props.link})` }} alt={props.name}></div>
+            <div className="card__image" style={{ backgroundImage: `url(${props.link})` }} alt={props.name} onClick={handleClick}></div>
             <div className="card__content">
                 <h2 className="card__title">{props.name}</h2>
                 <div className="card__like-wrapper">

@@ -7,7 +7,7 @@ function Main(props) {
     const [userName, setUserName] = React.useState('');
     const [userDescription, setUserDescription] = React.useState('');
     const [userAvatar, setUserAvatar] = React.useState('');
-    const [cards, setCards] = React.useState([''])
+    const [cards, setCards] = React.useState([])
 
     React.useEffect(() => {
         api.getProfileInfo()
@@ -50,7 +50,7 @@ function Main(props) {
                 <ul className="cards-grid">
                     {cards.map(card => {
                         return (
-                            <Card id={card._id} name={card.name} link={card.link} card={props.card} onClick={props.onCardClick} />
+                            <Card key={card._id} name={card.name} link={card.link} card={props.card} onClick={props.onCardClick} />
                         )
                     })}
                 </ul>

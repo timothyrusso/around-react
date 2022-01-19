@@ -1,3 +1,5 @@
+import { apiConfig } from "./constants.js";
+
 class Api {
     constructor(config) {
         this._baseUrl = config.baseUrl;
@@ -23,4 +25,15 @@ class Api {
         })
             .then(this._checkResponse)
     }
+
+    getCards() {
+        return fetch(`${this._baseUrl}/${this._groupId}/cards/`, {
+            headers: this._header
+        })
+            .then(this._checkResponse)
+    }
 }
+
+const api = new Api(apiConfig)
+
+export default api;

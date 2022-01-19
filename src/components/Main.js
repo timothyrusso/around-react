@@ -35,7 +35,7 @@ function Main(props) {
         <main className="main">
             <section className="profile">
                 <div className="profile__image-wrapper" onClick={props.onEditAvatarClick}>
-                    <img src="#" alt="Avatar of the page profile" className="profile__image" style={{ backgroundImage: `url(${userAvatar})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }} />
+                    <img src={userAvatar} alt="Avatar of the page profile" className="profile__image" />
                     <button aria-label="Edit" type="button" className="profile-image-button"></button>
                 </div>
                 <div className="profile__wrapper">
@@ -50,7 +50,7 @@ function Main(props) {
                 <ul className="cards-grid">
                     {cards.map(card => {
                         return (
-                            <Card name={card.name} id={card.id} link={card.link} card={props.card} onCardClick={props.onCardClick} />
+                            <Card id={card._id} name={card.name} link={card.link} card={props.card} onCardClick={props.onCardClick} />
                         )
                     })}
                 </ul>

@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../utils/api';
 import Card from './Card';
 
-function Main(props) {
+function Main({ onEditAvatarClick, onEditProfileClick, onAddPlaceClick, onCardClick, onDeleteClick, children }) {
 
     const [userName, setUserName] = React.useState('');
     const [userDescription, setUserDescription] = React.useState('');
@@ -19,9 +19,7 @@ function Main(props) {
             .catch((err) => {
                 console.log(err);
             })
-    })
 
-    React.useEffect(() => {
         api.getCards()
             .then((data) => {
                 setCards(data)
@@ -34,28 +32,26 @@ function Main(props) {
     return (
         <main className="main">
             <section className="profile">
-                <div className="profile__image-wrapper" onClick={props.onEditAvatarClick}>
+                <div className="profile__image-wrapper" onClick={onEditAvatarClick}>
                     <img src={userAvatar} alt="Avatar of the page profile" className="profile__image" />
                     <button aria-label="Edit" type="button" className="profile-image-button"></button>
                 </div>
                 <div className="profile__wrapper">
                     <h1 className="profile__name">{userName}</h1>
-                    <button aria-label="Edit" type="button" className="edit-button" onClick={props.onEditProfileClick}></button>
+                    <button aria-label="Edit" type="button" className="edit-button" onClick={onEditProfileClick}></button>
                     <p className="profile__about-me">{userDescription}</p>
                 </div>
-                <button aria-label="Add" type="button" className="add-button" onClick={props.onAddPlaceClick}></button>
+                <button aria-label="Add" type="button" className="add-button" onClick={onAddPlaceClick}></button>
             </section>
 
             <section className="gallery">
                 <ul className="cards-grid">
-                    {cards.map(card => {
-                        return (
-                            <Card key={card._id} name={card.name} link={card.link} card={props.card} onClick={props.onCardClick} onDeleteClick={props.onDeleteClick} />
-                        )
-                    })}
+                    {cards.map((card) =>
+                        (<Card key={card._id} card={card} onCardClick={onCardClick} onDeleteClick={onDeleteClick} />)
+                    )}
                 </ul>
             </section>
-            {props.children}
+            {children}
         </main>
     )
 }

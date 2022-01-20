@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -7,11 +7,11 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
-  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = React.useState(false)
-  const [selectedCard, setIsselectedCard] = React.useState()
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false)
+  const [selectedCard, setIsselectedCard] = useState(undefined)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -29,18 +29,19 @@ function App() {
     setIsConfirmationPopupOpen(true)
   }
 
-  function handleCardClick() {
-    setIsselectedCard(true)
-  }
-
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
+    setIsConfirmationPopupOpen(false)
     setIsselectedCard(undefined)
   }
 
-  React.useEffect(() => {
+  function handleCardClick(card) {
+    setIsselectedCard(card)
+  }
+
+  useEffect(() => {
     document.body.classList.add("page");
 
     return () => {
@@ -74,7 +75,7 @@ function App() {
               placeholder="Image link" required />
             <span id="image-link-input-error"></span>
           </PopupWithForm>
-          <PopupWithForm name="delete-card" title="Are you sure?" confirmationClass={'submit-button_type_delete-card'} isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} buttonText={'Yes'} />
+          <PopupWithForm name="delete-card" title="Are you sure?" confirmationButtonClass={'submit-button_type_delete-card'} confirmationTitleClass={'popup__title_type_delete-card'} isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} buttonText={'Yes'} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />

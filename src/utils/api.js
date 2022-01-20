@@ -1,4 +1,4 @@
-import { apiConfig } from "./constants.js";
+import { apiConfig } from './constants.js';
 
 /**
  * Class for handling API calls
@@ -47,7 +47,7 @@ class Api {
      */
     saveProfileInfo({ name, about }) {
         return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
-            method: "PATCH",
+            method: 'PATCH',
             headers: this._header,
             body: JSON.stringify({
                 name: name,
@@ -64,7 +64,7 @@ class Api {
      */
     saveProfileImage({ avatar }) {
         return fetch(`${this._baseUrl}/${this._groupId}/users/me/avatar`, {
-            method: "PATCH",
+            method: 'PATCH',
             headers: this._header,
             body: JSON.stringify({
                 avatar: avatar
@@ -92,7 +92,7 @@ class Api {
      */
     saveCards({ name, imageLink }) {
         return fetch(`${this._baseUrl}/${this._groupId}/cards`, {
-            method: "POST",
+            method: 'POST',
             headers: this._header,
             body: JSON.stringify({
                 name: name,
@@ -109,7 +109,7 @@ class Api {
      */
     deleteCards({ cardId }) {
         return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: this._header
         })
             .then(this._checkResponse)
@@ -122,7 +122,7 @@ class Api {
      */
     likeCards({ cardId }) {
         return fetch(`${this._baseUrl}/${this._groupId}/cards/likes/${cardId}`, {
-            method: "PUT",
+            method: 'PUT',
             headers: this._header
         })
             .then(this._checkResponse)
@@ -135,7 +135,7 @@ class Api {
      */
     dislikeCards({ cardId }) {
         return fetch(`${this._baseUrl}/${this._groupId}/cards/likes/${cardId}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: this._header
         })
             .then(this._checkResponse)

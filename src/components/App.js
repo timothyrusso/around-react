@@ -10,7 +10,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
-  const [selectedCard, setIsselectedCard] = React.useState(false)
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = React.useState(false)
+  const [selectedCard, setIsselectedCard] = React.useState()
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -24,6 +25,10 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
+  function handleConfirmationClick() {
+    setIsConfirmationPopupOpen(true)
+  }
+
   function handleCardClick() {
     setIsselectedCard(true)
   }
@@ -32,7 +37,7 @@ function App() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
-    setIsselectedCard(false)
+    setIsselectedCard(undefined)
   }
 
   React.useEffect(() => {
@@ -47,34 +52,29 @@ function App() {
     <>
       <div className="content">
         <Header />
-        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick}>
-          <PopupWithForm name="edit" title="Edit profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-            <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" required
+        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} onDeleteClick={handleConfirmationClick}>
+          <PopupWithForm name="edit" title="Edit profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Save'}>
+            <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" placeholder="Name" required
               minLength="2" maxLength="40" />
             <span id="name-input-error"></span>
-            <input type="text" id="aboutMe-input" name="aboutMe" className="popup__input popup__input_field_about-me" required
+            <input type="text" id="aboutMe-input" name="aboutMe" className="popup__input popup__input_field_about-me" placeholder="Description" required
               minLength="2" maxLength="200" />
             <span id="aboutMe-input-error"></span>
-            <button type="submit" className="submit-button popup__button">Save</button>
           </PopupWithForm>
-          <PopupWithForm name="add" title="New place" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+          <PopupWithForm name="add" title="New place" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Create'}>
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
               placeholder="Title" required minLength="1" maxLength="30" />
             <span id="title-input-error"></span>
             <input type="url" id="link-input" name="link" className="popup__input popup__input_field_link"
               placeholder="Image link" required />
             <span id="link-input-error"></span>
-            <button type="submit" className="submit-button popup__button">Create</button>
           </PopupWithForm>
-          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Create'}>
             <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link"
               placeholder="Image link" required />
             <span id="image-link-input-error"></span>
-            <button type="submit" className="submit-button popup__button">Create</button>
           </PopupWithForm>
-          <PopupWithForm name="delete-card" title="Are you sure?">
-            <button type="submit" className="submit-button submit-button_type_delete-card popup__button">Yes</button>
-          </PopupWithForm>
+          <PopupWithForm name="delete-card" title="Are you sure?" confirmationClass={'submit-button_type_delete-card'} isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} buttonText={'Yes'} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />

@@ -8,6 +8,7 @@ function PopupWithForm(props) {
                     <button aria-label="Close" type="button" className="close-button" onClick={props.onClose}></button>
                     <h2 className="popup__title">{props.title}</h2>
                     {props.children}
+                    <button type="submit" className={`submit-button popup__button ${props.confirmationClass}`} >{props.buttonText}</button>
                 </form>
             </div>
         </div>

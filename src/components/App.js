@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(undefined)
+  const [currentUser, setCurrentUser] = useState("")
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -40,6 +42,16 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card)
   }
+
+  React.useEffect(() => {
+    api.getProfileInfo()
+        .then((info) => {
+          setCurrentUser(info._id)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}, [])
 
   return (
     <div className="content">

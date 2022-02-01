@@ -1,6 +1,14 @@
 import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onDeleteClick }) {
+
+    const currentUser = React.useContext(CurrentUserContext);
+
+    const isOwn = card.owner._id === currentUser._id;
+    const cardDeleteButtonClassName = isOwn ? 'card__delete' : 'card__delete_hidden';
+
+    console.log(cardDeleteButtonClassName)
 
     function handleClick() {
         onCardClick(card)
@@ -8,7 +16,7 @@ function Card({ card, onCardClick, onDeleteClick }) {
 
     return (
         <li className="card">
-            <button aria-label="Delete" type="button" className="card__delete" onClick={onDeleteClick}></button>
+            <button aria-label="Delete" type="button" className={cardDeleteButtonClassName} onClick={onDeleteClick}></button>
             <div className="card__image" style={{ backgroundImage: `url(${card.link})` }} onClick={handleClick}></div>
             <div className="card__content">
                 <h2 className="card__title">{card.name}</h2>

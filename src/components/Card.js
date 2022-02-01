@@ -7,8 +7,10 @@ function Card({ card, onCardClick, onDeleteClick }) {
 
     const isOwn = card.owner._id === currentUser._id;
     const cardDeleteButtonClassName = isOwn ? 'card__delete' : 'card__delete_hidden';
-
-    console.log(cardDeleteButtonClassName)
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const cardLikeButtonClassName = (
+        `card__like ${isLiked ? 'card__like_active' : ''}`
+    );
 
     function handleClick() {
         onCardClick(card)
@@ -21,7 +23,7 @@ function Card({ card, onCardClick, onDeleteClick }) {
             <div className="card__content">
                 <h2 className="card__title">{card.name}</h2>
                 <div className="card__like-wrapper">
-                    <button aria-label="Like" type="button" className="card__like"></button>
+                    <button aria-label="Like" type="button" className={cardLikeButtonClassName}></button>
                     <p className="card__like-counter">{card.likes.length}</p>
                 </div>
             </div>

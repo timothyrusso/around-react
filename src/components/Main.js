@@ -39,8 +39,8 @@ function Main({ onEditAvatarClick, onEditProfileClick, onAddPlaceClick, onCardCl
     }
 
     function handleCardDelete(card) {
-        api.deleteCards({ cardId: card._id }).then((cards) => {
-            setCards((state) => state.filter((item) => item._id === card._id));
+        api.deleteCards({ cardId: card._id }).then(() => {
+            setCards((state) => state.filter((item) => item._id !== card._id));
         });
     }
 

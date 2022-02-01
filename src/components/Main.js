@@ -38,6 +38,12 @@ function Main({ onEditAvatarClick, onEditProfileClick, onAddPlaceClick, onCardCl
         });
     }
 
+    function handleCardDelete(card) {
+        api.deleteCards({ cardId: card._id }).then((cards) => {
+            setCards((state) => state.filter((item) => item._id === card._id));
+        });
+    }
+
     React.useEffect(() => {
         api.getCards()
             .then((data) => {
@@ -66,7 +72,7 @@ function Main({ onEditAvatarClick, onEditProfileClick, onAddPlaceClick, onCardCl
             <section className="gallery">
                 <ul className="cards-grid">
                     {cards.map((card) =>
-                        (<Card key={card._id} card={card} onCardClick={onCardClick} onDeleteClick={onDeleteClick} onCardLike={handleCardLike} />)
+                        (<Card key={card._id} card={card} onCardClick={onCardClick} onDeleteClick={onDeleteClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />)
                     )}
                 </ul>
             </section>

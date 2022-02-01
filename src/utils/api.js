@@ -141,6 +141,12 @@ class Api {
             .then(this._checkResponse)
     }
 
+    /**
+     * Function that delete or add the like object from the API
+     * @param {String} cardId - cardId necessary for the identification of the card
+     * @param {Boolean} isLiked - boolean property that identify if the card was already liked or not
+     * @returns {Object} Promise object containing all the information of the disliked card
+     */
     changeLikeCardStatus({ cardId, isLiked }) {
         return fetch(`${this._baseUrl}/${this._groupId}/cards/likes/${cardId}`, {
             method: isLiked ? 'DELETE' : 'PUT',

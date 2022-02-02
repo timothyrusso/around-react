@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -44,6 +45,17 @@ function App() {
     setSelectedCard(card)
   }
 
+  function handleUpdateUser(currentUser) {
+    api.saveProfileInfo({ name: currentUser.name, about: currentUser.about })
+      .then((info) => {
+        setCurrentUser(info)
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   React.useEffect(() => {
     api.getProfileInfo()
       .then((info) => {
@@ -59,14 +71,7 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} onDeleteClick={handleConfirmationClick}>
-          <PopupWithForm name="edit" title="Edit profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={"Save"}>
-            <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" placeholder="Name" required
-              minLength="2" maxLength="40" />
-            <span id="name-input-error"></span>
-            <input type="text" id="aboutMe-input" name="aboutMe" className="popup__input popup__input_field_about-me" placeholder="Description" required
-              minLength="2" maxLength="200" />
-            <span id="aboutMe-input-error"></span>
-          </PopupWithForm>
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <PopupWithForm name="add" title="New place" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={"Create"}>
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
               placeholder="Title" required minLength="1" maxLength="30" />

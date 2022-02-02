@@ -3,20 +3,15 @@ import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
-    const avatarRef = useRef(null)
+    const avatarRef = useRef()
 
     function handleSubmit(evt) {
         evt.preventDefault();
 
         onUpdateAvatar({
-            avatar: avatarRef.value
+            avatar: {}
         });
     }
-
-    // React.useEffect(() => {
-    //     setName(currentUser.name || '');
-    //     setDescription(currentUser.about || '');
-    // }, [currentUser]);
 
     return (
         <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isOpen} onClose={onClose} buttonText={"Create"} onSubmit={handleSubmit}>

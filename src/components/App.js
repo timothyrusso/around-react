@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -56,6 +57,17 @@ function App() {
       })
   }
 
+  function handleUpdateAvatar(currentUser) {
+    api.saveProfileImage({ avatar: currentUser.avatar })
+      .then((info) => {
+        setCurrentUser(info)
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   React.useEffect(() => {
     api.getProfileInfo()
       .then((info) => {
@@ -80,11 +92,7 @@ function App() {
               placeholder="Image link" required />
             <span id="link-input-error"></span>
           </PopupWithForm>
-          <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={"Create"}>
-            <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link"
-              placeholder="Image link" required />
-            <span id="image-link-input-error"></span>
-          </PopupWithForm>
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <PopupWithForm name="delete-card" title="Are you sure?" confirmationButtonClass={"submit-button_type_delete-card"} confirmationTitleClass={"popup__title_type_delete-card"} isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} buttonText={"Yes"} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>

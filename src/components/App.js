@@ -60,23 +60,28 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
+    escapeListenerOn()
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
+    escapeListenerOn()
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
+    escapeListenerOn()
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
+    escapeListenerOn()
   }
 
   function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true)
     setSelectedDeleteCard(card)
+    escapeListenerOn()
   }
 
   function closeAllPopups() {
@@ -85,6 +90,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsConfirmationPopupOpen(false)
     setSelectedCard(undefined)
+    escapeListenerOff()
   }
 
   function handleUpdateUser(currentUser) {
@@ -118,6 +124,20 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  function handeleEscapeButton(evt) {
+    if (evt.key === 'Escape') {
+      closeAllPopups()
+    }
+  }
+
+  function escapeListenerOn() {
+    document.addEventListener('keydown', handeleEscapeButton);
+  }
+
+  function escapeListenerOff() {
+    document.removeEventListener('keydown', handeleEscapeButton);
   }
 
   React.useEffect(() => {

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import AddPlacePopup from "./AddPlacePopup";
+import DeleteConfirmPopup from "./DeleteConfirmPopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -17,6 +17,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(undefined)
+  const [selectedDeleteCard, setSelectedDeleteCard] = useState(undefined)
   const [currentUser, setCurrentUser] = useState("")
 
   const [cards, setCards] = React.useState([])
@@ -72,8 +73,9 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
-  function handleConfirmationClick() {
+  function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true)
+    setSelectedDeleteCard(card)
   }
 
   function closeAllPopups() {
@@ -138,11 +140,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="content">
         <Header />
-        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} onDeleteClick={handleConfirmationClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} >
+        <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} onDeleteClick={handleConfirmationClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-          <PopupWithForm name="delete-card" title="Are you sure?" confirmationButtonClass={"submit-button_type_delete-card"} confirmationTitleClass={"popup__title_type_delete-card"} isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} buttonText={"Yes"} />
+          <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={setSelectedDeleteCard} deleteCard={handleCardDelete} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />

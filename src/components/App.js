@@ -60,28 +60,28 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
-    escapeListenerOn()
+    listenersOn()
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
-    escapeListenerOn()
+    listenersOn()
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
-    escapeListenerOn()
+    listenersOn()
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-    escapeListenerOn()
+    listenersOn()
   }
 
   function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true)
     setSelectedDeleteCard(card)
-    escapeListenerOn()
+    listenersOn()
   }
 
   function closeAllPopups() {
@@ -90,7 +90,7 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsConfirmationPopupOpen(false)
     setSelectedCard(undefined)
-    escapeListenerOff()
+    listenersOff()
   }
 
   function handleUpdateUser(currentUser) {
@@ -132,12 +132,20 @@ function App() {
     }
   }
 
-  function escapeListenerOn() {
+  function listenersOn() {
     document.addEventListener('keydown', handeleEscapeButton);
+    document.addEventListener('click', overlayHandler)
   }
 
-  function escapeListenerOff() {
+  function listenersOff() {
     document.removeEventListener('keydown', handeleEscapeButton);
+    document.removeEventListener('click', overlayHandler)
+  }
+
+  function overlayHandler(evt) {
+    if (evt.target.classList.contains('popup')) {
+      closeAllPopups()
+    }
   }
 
   React.useEffect(() => {

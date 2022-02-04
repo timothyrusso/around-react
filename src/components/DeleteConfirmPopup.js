@@ -5,7 +5,7 @@ function DeleteConfirmPopup({ isOpen, onClose, card, deleteCard }) {
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        // deleteCard(card)
+        deleteCard(card)
     }
 
     return (

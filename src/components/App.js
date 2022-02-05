@@ -162,7 +162,7 @@ function App() {
     }
   }
 
-  function test() {
+  function startLoading() {
     setIsLoading(true)
   }
 
@@ -188,10 +188,10 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} />
-          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} />
-          <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} />
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} />
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} />
+          <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} startLoading={startLoading} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading, startLoading }) {
 
     const [cardName, setcardName] = useState('')
     const [link, setLink] = useState('')
@@ -15,12 +15,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading }) {
     }
 
     function handleSubmit(evt) {
-        evt.preventDefault();
+        startLoading()
+        evt.preventDefault()
         onAddPlaceSubmit({ cardName, link })
     }
 
     return (
-        <PopupWithForm name="add" title="New place" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving"} isLoading={isLoading} onSubmit={handleSubmit}>
+        <PopupWithForm name="add" title="New place" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit}>
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
                 placeholder="Title" required minLength="1" maxLength="30" value={cardName} onChange={handleNameCardChange} />
             <span id="title-input-error"></span>

@@ -3,7 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading }) {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -19,6 +19,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     }
 
     function handleSubmit(evt) {
+        startLoading()
         // Prevent the browser from navigating to the form address
         evt.preventDefault();
 
@@ -35,7 +36,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     }, [currentUser]);
 
     return (
-        <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving"} isLoading={isLoading} onSubmit={handleSubmit}>
+        <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit}>
             <input type="text" id="name-input" name="name" className="popup__input popup__input_field_name" placeholder="Name" required
                 minLength="2" maxLength="40" value={name} onChange={handleNameChange} />
             <span id="name-input-error"></span>

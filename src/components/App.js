@@ -18,7 +18,7 @@ function App() {
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(undefined)
   const [selectedDeleteCard, setSelectedDeleteCard] = useState(undefined)
-  const [currentUser, setCurrentUser] = useState("")
+  const [currentUser, setCurrentUser] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [cards, setCards] = useState([])
 
@@ -50,6 +50,9 @@ function App() {
       .then((newCard) => {
         setCards((state) => state.map((item) => item._id === card._id ? newCard : item));
       })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleCardDelete(card) {
@@ -57,6 +60,9 @@ function App() {
       .then(() => {
         setCards((state) => state.filter((item) => item._id !== card._id));
         closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(() => {
         setIsLoading(false);

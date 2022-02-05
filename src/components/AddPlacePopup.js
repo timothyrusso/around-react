@@ -3,11 +3,11 @@ import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading, startLoading }) {
 
-    const [cardName, setcardName] = useState('')
+    const [cardName, setCardName] = useState('')
     const [link, setLink] = useState('')
 
     function handleNameCardChange(evt) {
-        setcardName(evt.target.value);
+        setCardName(evt.target.value);
     }
 
     function handleLinkChange(evt) {
@@ -20,10 +20,16 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading, startLoad
         onAddPlaceSubmit({ cardName, link })
     }
 
+    React.useEffect(() => {
+        setCardName('');
+        setLink('');
+    }, [isOpen]);
+
+
     return (
         <PopupWithForm name="add" title="New place" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit}>
             <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
-                placeholder="Title" required minLength="1" maxLength="30" value={cardName} onChange={handleNameCardChange} />
+                placeholder="Title" required minLength="2" maxLength="30" value={cardName} onChange={handleNameCardChange} />
             <span id="title-input-error"></span>
             <input type="url" id="link-input" name="link" className="popup__input popup__input_field_link"
                 placeholder="Image link" required value={link} onChange={handleLinkChange} />

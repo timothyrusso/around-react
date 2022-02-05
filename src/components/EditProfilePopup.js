@@ -33,7 +33,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoadi
     React.useEffect(() => {
         setName(currentUser.name || '');
         setDescription(currentUser.about || '');
-    }, [currentUser]);
+    }, [currentUser, isOpen]);
 
     return (
         <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit}>

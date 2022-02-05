@@ -19,8 +19,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(undefined)
   const [selectedDeleteCard, setSelectedDeleteCard] = useState(undefined)
   const [currentUser, setCurrentUser] = useState("")
-
-  const [cards, setCards] = React.useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [cards, setCards] = useState([])
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -46,16 +46,21 @@ function App() {
        liked status.
 
     */
-    api.changeLikeCardStatus({ cardId: card._id, isLiked }).then((newCard) => {
-      setCards((state) => state.map((item) => item._id === card._id ? newCard : item));
-    });
+    api.changeLikeCardStatus({ cardId: card._id, isLiked })
+      .then((newCard) => {
+        setCards((state) => state.map((item) => item._id === card._id ? newCard : item));
+      })
   }
 
   function handleCardDelete(card) {
-    api.deleteCards({ cardId: card._id }).then(() => {
-      setCards((state) => state.filter((item) => item._id !== card._id));
-      closeAllPopups();
-    });
+    api.deleteCards({ cardId: card._id })
+      .then(() => {
+        setCards((state) => state.filter((item) => item._id !== card._id));
+        closeAllPopups();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleCardClick(card) {
@@ -102,6 +107,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleUpdateAvatar(currentUser) {
@@ -113,6 +121,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleAddPlaceSubmit(card) {
@@ -123,6 +134,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   }
 
@@ -148,6 +162,10 @@ function App() {
     }
   }
 
+  function test() {
+    setIsLoading(true)
+  }
+
   React.useEffect(() => {
     api.getProfileInfo()
       .then((info) => {
@@ -170,10 +188,10 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} />
-          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-          <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} />
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} />
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} />
+          <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>
         <Footer />

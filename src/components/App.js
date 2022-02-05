@@ -71,28 +71,23 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
-    listenersOn()
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
-    listenersOn()
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
-    listenersOn()
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-    listenersOn()
   }
 
   function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true)
     setSelectedDeleteCard(card)
-    listenersOn()
   }
 
   function closeAllPopups() {
@@ -101,7 +96,6 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsConfirmationPopupOpen(false)
     setSelectedCard(undefined)
-    listenersOff()
   }
 
   function handleUpdateUser(currentUser) {
@@ -144,28 +138,6 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       })
-  }
-
-  function handeleEscapeButton(evt) {
-    if (evt.key === 'Escape') {
-      closeAllPopups()
-    }
-  }
-
-  function listenersOn() {
-    document.addEventListener('keydown', handeleEscapeButton);
-    document.addEventListener('click', overlayHandler)
-  }
-
-  function listenersOff() {
-    document.removeEventListener('keydown', handeleEscapeButton);
-    document.removeEventListener('click', overlayHandler)
-  }
-
-  function overlayHandler(evt) {
-    if (evt.target.classList.contains('popup')) {
-      closeAllPopups()
-    }
   }
 
   function startLoading() {

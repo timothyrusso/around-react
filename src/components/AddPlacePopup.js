@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
+import Input from "./Input";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading, startLoading }) {
 
@@ -28,12 +29,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, isLoading, startLoad
 
     return (
         <PopupWithForm name="add" title="New place" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit}>
-            <input type="text" id="title-input" name="title" className="popup__input popup__input_field_title"
-                placeholder="Title" required minLength="2" maxLength="30" value={cardName} onChange={handleNameCardChange} />
-            <span id="title-input-error"></span>
-            <input type="url" id="link-input" name="link" className="popup__input popup__input_field_link"
-                placeholder="Image link" required value={link} onChange={handleLinkChange} />
-            <span id="link-input-error"></span>
+            <Input type={"text"} idName={"title-input"} name={"title"} fieldName={"field_title"} placeholder={"Title"} minLength={"2"} maxLength={"30"} value={cardName} onChange={handleNameCardChange} />
+            <Input type={"url"} idName={"link-input"} name={"link"} fieldName={"field_link"} placeholder={"Image link"} value={link} onChange={handleLinkChange} />
         </PopupWithForm>
     )
 }

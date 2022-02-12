@@ -21,6 +21,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [cards, setCards] = useState([])
+  const [inputValidity, setInputValidity] = useState(true)
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -78,10 +79,12 @@ function App() {
   }
 
   function handleEditProfileClick() {
+    setInputValidity(true)
     setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
+    setInputValidity(true)
     setIsAddPlacePopupOpen(true)
   }
 
@@ -144,6 +147,10 @@ function App() {
     setIsLoading(true)
   }
 
+  function checkValidity(evt) {
+    evt.target.validity.valid ? setInputValidity(true) : setInputValidity(false)
+  }
+
   React.useEffect(() => {
     api.getProfileInfo()
       .then((info) => {
@@ -166,9 +173,9 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} />
-          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
           <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} startLoading={startLoading} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>

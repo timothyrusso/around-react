@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Input from "./Input";
 
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, formValidity, onFormUpdate }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, formValidity, onFormUpdate, onInputUpdate }) {
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -12,10 +12,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoadi
   const currentUser = useContext(CurrentUserContext)
 
   function handleNameChange(evt) {
+    onInputUpdate(evt, "name-input")
     setName(evt.target.value);
   }
 
   function handleDescriptionChange(evt) {
+    onInputUpdate(evt, "aboutMe-input")
     setDescription(evt.target.value);
   }
 

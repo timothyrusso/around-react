@@ -21,8 +21,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [cards, setCards] = useState([])
-  const [inputValidity, setInputValidity] = useState(true)
+  const [inputValidity, setInputValidity] = useState(false)
   const [formValidity, setFormValidity] = useState(true)
+  const [errorMessage, setErrorMessage] = useState("")
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -148,8 +149,28 @@ function App() {
     setIsLoading(true)
   }
 
-  function checkValidity(evt) {
-    evt.target.validity.valid ? setInputValidity(true) : setInputValidity(false)
+  function checkValidity(evt, spanId) {
+    const input = evt.target
+    if (input.validity.valid) {
+      setInputValidity(true)
+      toggleInputError(input, spanId)
+    } else {
+      setInputValidity(false)
+      toggleInputError(input, spanId)
+    }
+  }
+
+  function toggleInputError(input, spanId) {
+    const spanElement = document.querySelector(`#${spanId}-error`)
+    if (!inputValidity) {
+      setErrorMessage(input.validationMessage)
+      spanElement.textContent = errorMessage
+      spanElement.classList.add("popup__input_type_error")
+    } else {
+      setErrorMessage("")
+      spanElement.textContent = errorMessage
+      spanElement.classList.remove("popup__input_type_error")
+    }
   }
 
   function onFormUpdate(data) {
@@ -178,7 +199,7 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} onInputUpdate={checkValidity} />
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} />
           <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} startLoading={startLoading} />

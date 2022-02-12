@@ -19,8 +19,8 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, startLoad
   }
 
   return (
-    <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} inputValidity={inputValidity}>
-      <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link" placeholder="Image link" ref={avatarRef} required onChange={handleAvatarChange} />
+    <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} inputValidity={inputValidity} validityHandler={handleAvatarChange}>
+      <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link" placeholder="Image link" ref={avatarRef} required />
       <span id="image-link-input"></span>
     </PopupWithForm>
   )

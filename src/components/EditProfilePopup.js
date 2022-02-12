@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Input from "./Input";
 
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, inputValidity, checkValidity }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, checkValidity, checkFormValidity, formValidity, onFormUpdate }) {
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -39,7 +39,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoadi
   }, [currentUser, isOpen]);
 
   return (
-    <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} inputValidity={inputValidity}>
+    <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} formValidity={formValidity} checkFormValidity={checkFormValidity} onFormUpdate={onFormUpdate}>
       <Input type={"text"} idName={"name-input"} name={"name"} fieldName={"field_name"} placeholder={"Name"} minLength={"2"} maxLength={"40"} value={name} onChange={handleNameChange} />
       <Input type={"text"} idName={"aboutMe-input"} name={"aboutMe"} fieldName={"field_about-me"} placeholder={"Description"} minLength={"2"} maxLength={"200"} value={description} onChange={handleDescriptionChange} />
     </PopupWithForm>

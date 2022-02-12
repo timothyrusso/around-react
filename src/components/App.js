@@ -22,6 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [cards, setCards] = useState([])
   const [inputValidity, setInputValidity] = useState(true)
+  const [formValidity, setFormValidity] = useState(true)
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -151,6 +152,10 @@ function App() {
     evt.target.validity.valid ? setInputValidity(true) : setInputValidity(false)
   }
 
+  function onFormUpdate(data) {
+    data ? setFormValidity(true) : setFormValidity(false)
+  }
+
   React.useEffect(() => {
     api.getProfileInfo()
       .then((info) => {
@@ -173,7 +178,7 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} formValidity={formValidity} onFormUpdate={onFormUpdate} />
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} inputValidity={inputValidity} checkValidity={checkValidity} />
           <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} startLoading={startLoading} />

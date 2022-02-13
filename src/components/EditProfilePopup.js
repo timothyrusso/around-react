@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Input from "./Input";
 
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, formValidity, onFormUpdate, onInputUpdate }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoading, formValidity, onFormUpdate, onInputUpdate, errorMessage, inputValidity }) {
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -12,12 +12,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoadi
   const currentUser = useContext(CurrentUserContext)
 
   function handleNameChange(evt) {
-    onInputUpdate(evt, "name-input")
+    onInputUpdate(evt)
     setName(evt.target.value);
   }
 
   function handleDescriptionChange(evt) {
-    onInputUpdate(evt, "aboutMe-input")
+    onInputUpdate(evt)
     setDescription(evt.target.value);
   }
 
@@ -40,8 +40,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, startLoadi
 
   return (
     <PopupWithForm name="edit" title="Edit profile" isOpen={isOpen} onClose={onClose} buttonText={"Save"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} formValidity={formValidity} onFormUpdate={onFormUpdate}>
-      <Input type={"text"} idName={"name-input"} name={"name"} fieldName={"field_name"} placeholder={"Name"} minLength={"2"} maxLength={"40"} value={name} onChange={handleNameChange} />
-      <Input type={"text"} idName={"aboutMe-input"} name={"aboutMe"} fieldName={"field_about-me"} placeholder={"Description"} minLength={"2"} maxLength={"200"} value={description} onChange={handleDescriptionChange} />
+      <Input type={"text"} idName={"name-input"} name={"name"} fieldName={"field_name"} placeholder={"Name"} minLength={"2"} maxLength={"40"} value={name} onChange={handleNameChange} errorMessage={errorMessage} inputValidity={inputValidity} />
+      <Input type={"text"} idName={"aboutMe-input"} name={"aboutMe"} fieldName={"field_about-me"} placeholder={"Description"} minLength={"2"} maxLength={"200"} value={description} onChange={handleDescriptionChange} errorMessage={errorMessage} inputValidity={inputValidity} />
     </PopupWithForm>
   )
 }

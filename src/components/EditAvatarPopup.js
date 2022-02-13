@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, startLoading, formValidity, onFormUpdate }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, startLoading, formValidity, onFormUpdate, errorMessage, inputValidity, onInputUpdate }) {
 
   const avatarRef = useRef()
 
@@ -16,8 +16,8 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, startLoad
 
   return (
     <PopupWithForm name="profile-image" title="Change profile picture" isOpen={isOpen} onClose={onClose} buttonText={"Create"} loadingText={"Saving.."} isLoading={isLoading} onSubmit={handleSubmit} formValidity={formValidity} onFormUpdate={onFormUpdate}>
-      <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link" placeholder="Image link" ref={avatarRef} required />
-      <span id="image-link-input" className="popup__input_type_error"></span>
+      <input type="url" id="image-link-input" name="link" className="popup__input popup__input_image_link" placeholder="Image link" ref={avatarRef} required onChange={onInputUpdate} />
+      <span id="image-link-input" className={!inputValidity ? "popup__input_type_error" : ""}>{!inputValidity ? errorMessage : ""}</span>
     </PopupWithForm>
   )
 }

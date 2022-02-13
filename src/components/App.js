@@ -82,11 +82,13 @@ function App() {
 
   function handleEditProfileClick() {
     setFormValidity(true)
+    setInputValidity(true)
     setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
     setFormValidity(true)
+    setInputValidity(true)
     setIsAddPlacePopupOpen(true)
   }
 
@@ -149,27 +151,13 @@ function App() {
     setIsLoading(true)
   }
 
-  function checkValidity(evt, spanId) {
-    const input = evt.target
-    if (input.validity.valid) {
-      setInputValidity(true)
-      toggleInputError(input, spanId)
-    } else {
+  function checkValidity(evt) {
+    if (!evt.target.validity.valid) {
       setInputValidity(false)
-      toggleInputError(input, spanId)
-    }
-  }
-
-  function toggleInputError(input, spanId) {
-    const spanElement = document.querySelector(`#${spanId}-error`)
-    if (!inputValidity) {
-      setErrorMessage(input.validationMessage)
-      spanElement.textContent = errorMessage
-      spanElement.classList.add("popup__input_type_error")
+      setErrorMessage(evt.target.validationMessage)
     } else {
+      setInputValidity(true)
       setErrorMessage("")
-      spanElement.textContent = errorMessage
-      spanElement.classList.remove("popup__input_type_error")
     }
   }
 
@@ -199,9 +187,9 @@ function App() {
       <div className="content">
         <Header />
         <Main onEditAvatarClick={handleEditAvatarClick} onEditProfileClick={handleEditProfileClick} onAddPlaceClick={handleAddPlaceClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmationClick} >
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} onInputUpdate={checkValidity} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} />
-          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} />
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} onInputUpdate={checkValidity} errorMessage={errorMessage} inputValidity={inputValidity} />
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlaceSubmit={handleAddPlaceSubmit} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} onInputUpdate={checkValidity} errorMessage={errorMessage} inputValidity={inputValidity} />
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} startLoading={startLoading} formValidity={formValidity} onFormUpdate={onFormUpdate} errorMessage={errorMessage} inputValidity={inputValidity} onInputUpdate={checkValidity} />
           <DeleteConfirmPopup isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} card={selectedDeleteCard} deleteCard={handleCardDelete} isLoading={isLoading} startLoading={startLoading} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </Main>

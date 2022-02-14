@@ -151,14 +151,19 @@ function App() {
     setIsLoading(true)
   }
 
+  // function checkValidity(evt) {
+  //   if (!evt.target.validity.valid) {
+  //     setInputValidity(false)
+  //     setErrorMessage(evt.target.validationMessage)
+  //   } else {
+  //     setInputValidity(true)
+  //     setErrorMessage("")
+  //   }
+  // }
+
   function checkValidity(evt) {
-    if (!evt.target.validity.valid) {
-      setInputValidity(false)
-      setErrorMessage(evt.target.validationMessage)
-    } else {
-      setInputValidity(true)
-      setErrorMessage("")
-    }
+    const name = evt.target.name;
+    setErrorMessage({ ...errorMessage, [name]: evt.target.validationMessage });
   }
 
   function onFormUpdate(data) {

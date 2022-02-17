@@ -82,13 +82,13 @@ function App() {
 
   function handleEditProfileClick() {
     setFormValidity(true)
-    setInputValidity(true)
+    setErrorMessage({})
     setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
     setFormValidity(true)
-    setInputValidity(true)
+    setErrorMessage({})
     setIsAddPlacePopupOpen(true)
   }
 
@@ -151,15 +151,10 @@ function App() {
     setIsLoading(true)
   }
 
-  // function checkValidity(evt) {
-  //   if (!evt.target.validity.valid) {
-  //     setInputValidity(false)
-  //     setErrorMessage(evt.target.validationMessage)
-  //   } else {
-  //     setInputValidity(true)
-  //     setErrorMessage("")
-  //   }
-  // }
+  // checkValidity takes an empty object, adds all the current errors with ...errorMessage, and then updates
+  // the error message for current input by adding [name]: evt.target.validationMessage to the object.
+  // If the input is now valid, this should have the effect of clearing a previous error message by overwriting
+  // it with an empty string.
 
   function checkValidity(evt) {
     const name = evt.target.name;
